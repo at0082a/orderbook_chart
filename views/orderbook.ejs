@@ -59,52 +59,65 @@
         var chart = am4core.create("chartdiv", am4charts.XYChart);
         
         // Add data
-        chart.dataSource.url = "https://localhost:3001/apiorder"
+        chart.dataSource.url = "http://localhost:3001/orderbook"
         chart.dataSource.reloadFrequency = 30000;
         chart.dataSource.adapter.add("parsedData", function(data) {
         
-          return data
+          return data;
 
         });
+
         // Set up precision for numbers
         chart.numberFormatter.numberFormat = "#,###.####";
         // Create axes
-        var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-        xAxis.dataFields.category = "value";
-        //xAxis.renderer.grid.template.location = 0;
-        xAxis.renderer.minGridDistance = 50;
-        xAxis.title.text = "Price (BTC/ETH)";
-        var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        yAxis.title.text = "Volume";
-        // Create series
-        var series = chart.series.push(new am4charts.StepLineSeries());
-        series.dataFields.categoryX = "value";
-        series.dataFields.valueY = "bidstotalvolume";
-        series.strokeWidth = 2;
-        series.stroke = am4core.color("#0f0");
-        series.fill = series.stroke;
-        series.fillOpacity = 0.9;
-        series.tooltipText = "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{bidsvolume}[/]"
-        var series2 = chart.series.push(new am4charts.StepLineSeries());
-        series2.dataFields.categoryX = "value";
-        series2.dataFields.valueY = "askstotalvolume";
-        series2.strokeWidth = 2;
-        series2.stroke = am4core.color("#f00");
-        series2.fill = series2.stroke;
-        series2.fillOpacity = 0.8;
-        series2.tooltipText = "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{asksvolume}[/]"
-        var series3 = chart.series.push(new am4charts.ColumnSeries());
-        series3.dataFields.categoryX = "value";
-        series3.dataFields.valueY = "bidsvolume";
-        series3.strokeWidth = 0;
-        series3.fill = am4core.color("#000");
-        series3.fillOpacity = 0.2;
-        var series4 = chart.series.push(new am4charts.ColumnSeries());
-        series4.dataFields.categoryX = "value";
-        series4.dataFields.valueY = "asksvolume";
-        series4.strokeWidth = 0;
-        series4.fill = am4core.color("#000");
-        series4.fillOpacity = 0.2;
+
+    var xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      xAxis.dataFields.category = "value";
+//xAxis.renderer.grid.template.location = 0;
+      xAxis.renderer.minGridDistance = 50;
+      xAxis.title.text = "Price (BTC/ETH)";
+
+    var yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      yAxis.title.text = "Volume";
+
+// Create series
+    var series = chart.series.push(new am4charts.StepLineSeries());
+    series.dataFields.categoryX = "value";
+    series.dataFields.valueY = "bidstotalvolume";
+    series.strokeWidth = 2;
+    series.stroke = am4core.color("#0f0");
+    series.fill = series.stroke;
+    series.fillOpacity = 0.1;
+    series.tooltipText = "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{bidstotalvolume}[/]"
+    series.stacked = true;
+
+    var series2 = chart.series.push(new am4charts.StepLineSeries());
+    series2.dataFields.categoryX = "value";
+    series2.dataFields.valueY = "askstotalvolume";
+    series2.strokeWidth = 2;
+    series2.stroke = am4core.color("#f00");
+    series2.fill = series2.stroke;
+    series2.fillOpacity = 0.1;
+    series2.tooltipText = "Ask: [bold]{categoryX}[/]\nTotal volume: [bold]{valueY}[/]\nVolume: [bold]{askstotalvolume}[/]"
+    series2.stacked = true;
+
+    var series3 = chart.series.push(new am4charts.StepLineSeries());
+    series3.dataFields.categoryX = "value";
+    series3.dataFields.valueY = "secondcoinbidstotalvolume";
+    series3.strokeWidth = 0;
+    series3.fill = am4core.color("blue");
+    series3.fillOpacity = 0.4;
+    series3.stacked = true
+
+    var series4 = chart.series.push(new am4charts.StepLineSeries());
+    series4.dataFields.categoryX = "value";
+    series4.dataFields.valueY = "secondcoinaskstotalvolume";
+    series4.strokeWidth = 0;
+    series4.fill = am4core.color("yellow");
+    series4.fillOpacity = 0.4;
+    series4.stacked = true;
+
+      
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
         }); // end am4core.ready()
